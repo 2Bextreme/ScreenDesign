@@ -10,7 +10,22 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenDesign">
         <activity
-            android:name=".MainActivity"
+            android:name=".activity.DesireShiftHandOverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ConfigurationActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.SalaryConfirmationScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ThisMonthShiftConfirmationScreenActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.ConfirmationAlreadyShiftHandOverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
