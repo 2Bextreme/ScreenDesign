@@ -1,4 +1,4 @@
-package com.example.screendesign.fragment
+package com.example.screendesign.viewmodel
 
 import androidx.lifecycle.ViewModel
 

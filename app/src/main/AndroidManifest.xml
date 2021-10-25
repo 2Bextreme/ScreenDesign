@@ -10,7 +10,13 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenDesign">
         <activity
+            android:name=".activity.ConfirmationAlreadyShiftHandOverActivity"
+            android:exported="false" />
+        <activity
             android:name=".activity.DesireShiftHandOverActivity"
+            android:exported="false" />
+        <activity
+            android:name=".activity.DesireShiftHandOverVerificationActivity"
             android:exported="false" />
         <activity
             android:name=".activity.ConfigurationActivity"
@@ -20,9 +26,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.ThisMonthShiftConfirmationScreenActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ConfirmationAlreadyShiftHandOverActivity"
             android:exported="false" />
         <activity
             android:name=".activity.MainActivity"
