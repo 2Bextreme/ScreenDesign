@@ -9,20 +9,38 @@
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/drawable/borders.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/drawable/shape_corners_10dp.xml" value="0.22135416666666666" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/drawable/shape_corners_20dp.xml" value="0.22135416666666666" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout-w1240dp/activity_login.xml" value="0.23560910307898258" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout-w936dp/activity_login.xml" value="0.275" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_already_sent.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_already_shift_hand_over.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_configuration.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_confirmation_already_shift_hand_over.xml" value="0.22" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_desire_shift_hand_over.xml" value="0.25" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_login.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_mail_address_change.xml" value="0.33" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_main.xml" value="0.33" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_password_change.xml" value="0.33" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_password_resetting.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_salary_confirmation_screen.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_this_month_shift_confirmation_screen.xml" value="0.35260416666666666" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/activity_top_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/app_bar_top_page.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/confirmation_already_shift_hand_over_activity.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/content_top_page.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/desire_shift_hand_over_activity.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/desire_shift_hand_over_fragment.xml" value="0.33" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/desire_shift_hand_over_verification_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/desire_shift_hand_over_verification_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_desire_shift_hand_over_verification.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_gallery.xml" value="0.20520833333333333" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/nav_header_top_page.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/notification_setting_activity.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/shift_list_item.xml" value="0.33" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/shift_submission_date_item.xml" value="0.1" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/this_month_shift_confirmation_screen_fragment.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/menu/top_page.xml" value="0.20520833333333333" />
       </map>
     </option>
   </component>

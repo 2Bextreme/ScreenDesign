@@ -10,11 +10,9 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.screendesign.R
 import com.example.screendesign.activity.DesireShiftHandOverActivity
+import com.example.screendesign.activity.TopPageActivity
 import com.example.screendesign.databinding.DesireShiftHandOverVerificationFragmentBinding
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
-import com.example.screendesign.activity.MainActivity
-
-
 
 
 class DesireShiftHandOverVerificationFragment : Fragment() {
@@ -39,7 +37,7 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
         }
 
         binding.verificationBtn2.setOnClickListener {
-            val intent = Intent(requireContext(),MainActivity::class.java)
+            val intent = Intent(requireContext(),TopPageActivity::class.java)
             startActivity(intent)
         }
 

@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import com.example.screendesign.R
+import com.example.screendesign.activity.DesireShiftHandOverActivity
 import com.example.screendesign.activity.DesireShiftHandOverVerificationActivity
 import com.example.screendesign.databinding.ActivityConfirmationAlreadyShiftHandOverBinding
 import com.example.screendesign.viewmodel.ConfirmationAlreadyShiftHandOverViewModel
@@ -31,8 +32,8 @@ class ConfirmationAlreadyShiftHandOverFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.activity_confirmation_already_shift_hand_over, container, false)
 
-        binding.verificationBtn.setOnClickListener {
-            val intent = Intent(requireContext(), DesireShiftHandOverVerificationActivity::class.java)
+        binding.shiftHandOverBtn.setOnClickListener {
+            val intent = Intent(requireContext(), DesireShiftHandOverActivity::class.java)
             startActivity(intent)
         }
 
