@@ -1,25 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                   xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                   xmlns:tools="http://schemas.android.com/tools"
-                                                   android:layout_width="match_parent"
-                                                   android:layout_height="wrap_content"
-                                                   android:layout_marginTop="4dp"
-                                                   android:background="@drawable/borders">
+<layout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-            android:text="2021/10/13"
+    <data>
+        <variable
+            name="shiftDate"
+            type="com.example.screendesign.data.ShiftDate" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/borders">
+
+        <TextView
+            android:id="@+id/textView14"
             android:layout_width="0dp"
-            android:layout_height="wrap_content" android:id="@+id/textView18"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/checkBox"
-            android:textAppearance="@style/TextAppearance.AppCompat.Medium" android:layout_marginTop="8dp"
-            android:layout_marginStart="8dp"/>
-    <CheckBox
+            android:layout_height="wrap_content"
+            android:text="@{shiftDate.day}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/textView13"
+            app:layout_constraintTop_toTopOf="@+id/textView13"
+            tools:text="dd" />
+
+        <TextView
+            android:id="@+id/textView13"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="@{shiftDate.month}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toEndOf="@+id/textView18"
+            app:layout_constraintTop_toTopOf="@+id/textView18"
+            tools:text="mm" />
+
+        <TextView
+            android:id="@+id/textView18"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@{shiftDate.year}"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="yyyy" />
+
+        <CheckBox
             android:text="CheckBox"
             android:layout_width="100dp"
-            android:layout_height="25dp" android:id="@+id/checkBox"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="@+id/textView18"
-            app:layout_constraintBottom_toBottomOf="parent" android:layout_marginBottom="8dp"
-            android:layout_marginEnd="8dp"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+            android:layout_height="25dp"
+            android:id="@+id/checkBox"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/textView18"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="8dp" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
