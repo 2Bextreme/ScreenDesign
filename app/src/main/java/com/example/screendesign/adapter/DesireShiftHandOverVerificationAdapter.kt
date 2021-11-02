@@ -1,4 +1,4 @@
-package com.example.screendesign.activity
+package com.example.screendesign.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
@@ -8,13 +8,12 @@ import com.example.screendesign.R
 import com.example.screendesign.data.ShiftDate
 import com.example.screendesign.databinding.ShiftSubmissionDateItemBinding
 
-class DesireShiftHandOverAdapter (
+class DesireShiftHandOverVerificationAdapter (
     private val layoutInflater: LayoutInflater,
-    private val shiftList: List<ShiftDate>,
-    private val toMonth : Int
-): RecyclerView.Adapter<DesireShiftHandOverAdapter.ViewHolder>() {
+    private val shiftList: List<ShiftDate>
+): RecyclerView.Adapter<DesireShiftHandOverVerificationAdapter.ViewHolder>() {
 
-    override fun getItemCount() = toMonth
+    override fun getItemCount() = shiftList.size
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val binding = DataBindingUtil.inflate<ShiftSubmissionDateItemBinding>(
@@ -34,9 +33,8 @@ class DesireShiftHandOverAdapter (
         private val binding: ShiftSubmissionDateItemBinding
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(shiftDate: ShiftDate) {
-
+            binding.checkBox.isChecked = shiftDate.isCheck
             binding.shiftDate = shiftDate
         }
     }
-
 }
