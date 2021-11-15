@@ -34,10 +34,14 @@
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_desire_shift_hand_over_verification.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_gallery.xml" value="0.20520833333333333" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/fragment_home.xml" value="0.36666666666666664" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/login_activity.xml" value="0.32472826086956524" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/login_fragment.xml" value="0.32472826086956524" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/nav_header_top_page.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/notification_setting_activity.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/shift_list_item.xml" value="0.33" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/shift_submission_date_item.xml" value="0.33" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/shift_submission_date_item_nocheckbox.xml" value="0.3654891304347826" />
+        <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/this_month_shift_confirmation_screen_activity.xml" value="0.3654891304347826" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/layout/this_month_shift_confirmation_screen_fragment.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/menu/activity_main_drawer.xml" value="0.36666666666666664" />
         <entry key="..\:/Users/181020/AndroidStudioProjects/ScreenDesign/app/src/main/res/menu/shift_list_item.xml" value="0.20572916666666666" />

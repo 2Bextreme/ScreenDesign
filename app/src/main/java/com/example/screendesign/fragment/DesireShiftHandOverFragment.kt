@@ -1,7 +1,6 @@
 package com.example.screendesign.fragment
 
 
-import android.app.Activity
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -27,8 +26,6 @@ import kotlin.collections.ArrayList
 class DesireShiftHandOverFragment : Fragment() {
 
     companion object {
-        private const val REQUEST_CODE = 1
-
         fun newInstance() = DesireShiftHandOverFragment()
     }
 
@@ -44,7 +41,7 @@ class DesireShiftHandOverFragment : Fragment() {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.desire_shift_hand_over_fragment, container, false)
 
-        //カレンダーの作成および今月以外の日付を指定できないように設定する。
+        //カレンダーの作成,および今月以外の日付を指定できないように設定する。
         var calendar = Calendar.getInstance()
         calendar[Calendar.DATE] = calendar.getActualMaximum(Calendar.DATE)
         calendar[Calendar.HOUR_OF_DAY] = 23
@@ -124,15 +121,24 @@ class DesireShiftHandOverFragment : Fragment() {
 
         binding.verificationBtn.setOnClickListener {
             val completeShiftList = ArrayList<ShiftDate>()
-            for(list in shiftList){
-                if(list.isCheck){
-                    completeShiftList.add(list)
+            if(binding.radioButton2.isChecked){
+                for(list in shiftList){
+                    if(list.isCheck){
+                        completeShiftList.add(list)
+                    }
+                }
+            }else{
+                for(list in shiftList){
+                    if(!list.isCheck){
+                        completeShiftList.add(list)
+                    }
                 }
             }
+
             val intent = Intent(requireContext(),DesireShiftHandOverVerificationActivity::class.java).apply {
                 this.putExtra("shiftList",completeShiftList)
             }
-            startActivityForResult(intent, REQUEST_CODE)
+            startActivity(intent)
         }
 
         return binding.root
@@ -142,13 +148,5 @@ class DesireShiftHandOverFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         viewModel =
             ViewModelProvider(this).get(DesireShiftHandOverVerificationViewModel::class.java)
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK && data != null) {
-
-            val detailSearchSnapshot = data.getParcelableExtra("shiftList")!! as ArrayList<ShiftDate>
-        }
     }
 }

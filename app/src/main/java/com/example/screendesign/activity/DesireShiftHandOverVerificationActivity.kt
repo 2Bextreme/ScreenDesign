@@ -25,10 +25,6 @@ class DesireShiftHandOverVerificationActivity : AppCompatActivity() ,DesireShift
     }
 
     override fun clickFixBtn(){
-        val intent = Intent().apply {
-            putExtra("intent",intent.getSerializableExtra("shiftList"))
-        }
-        setResult(Activity.RESULT_OK,intent)
         finish()
     }
 }

@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.screendesign" >
+    package="com.example.screendesign">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:allowBackup="true"
@@ -8,17 +11,14 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.ScreenDesign" >
+        android:theme="@style/Theme.ScreenDesign"
+        android:usesCleartextTraffic="true">
         <activity
-            android:name=".activity.AlreadySendActivity"
+            android:name=".activity.LoginActivity"
             android:exported="false" />
         <activity
             android:name=".activity.PasswordResettingActivity"
             android:exported="false" />
-        <activity
-            android:name=".activity.ui.login.LoginActivity"
-            android:exported="false"
-            android:label="@string/title_activity_login" />
         <activity
             android:name=".activity.MailAddressChangeActivity"
             android:exported="false" />
@@ -33,7 +33,7 @@
             android:name=".activity.TopPageActivity"
             android:exported="true"
             android:label="@string/title_activity_top_page"
-            android:theme="@style/Theme.ScreenDesign.NoActionBar" >
+            android:theme="@style/Theme.ScreenDesign.NoActionBar">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

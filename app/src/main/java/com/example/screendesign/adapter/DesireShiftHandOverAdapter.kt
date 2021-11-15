@@ -38,6 +38,11 @@ class DesireShiftHandOverAdapter (
             binding.checkBox.setOnClickListener{
                 shiftDate.isCheck = !shiftDate.isCheck
             }
+
+            binding.root.setOnClickListener {
+                shiftDate.isCheck = !shiftDate.isCheck
+                binding.checkBox.isChecked = shiftDate.isCheck
+            }
         }
     }
 }

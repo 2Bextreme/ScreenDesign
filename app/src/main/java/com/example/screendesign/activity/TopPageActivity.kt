@@ -13,7 +13,6 @@ import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.screendesign.R
-import com.example.screendesign.activity.ui.login.LoginActivity
 import com.example.screendesign.databinding.ActivityTopPageBinding
 
 class TopPageActivity : AppCompatActivity() {
@@ -49,6 +48,7 @@ class TopPageActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.top_page, menu)
         return true
     }
+    //
 
     //メニューをクリックしたときの処理
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
@@ -76,6 +76,7 @@ class TopPageActivity : AppCompatActivity() {
         }
         return false
     }
+    //
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_top_page)
