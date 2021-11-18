@@ -15,7 +15,13 @@
         android:usesCleartextTraffic="true">
         <activity
             android:name=".activity.LoginActivity"
-            android:exported="false" />
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
         <activity
             android:name=".activity.PasswordResettingActivity"
             android:exported="false" />
@@ -33,13 +39,8 @@
             android:name=".activity.TopPageActivity"
             android:exported="true"
             android:label="@string/title_activity_top_page"
-            android:theme="@style/Theme.ScreenDesign.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+            android:theme="@style/Theme.ScreenDesign.NoActionBar"/>
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
         <activity
             android:name=".activity.ThisMonthShiftConfirmationScreenActivity"
             android:exported="false" />

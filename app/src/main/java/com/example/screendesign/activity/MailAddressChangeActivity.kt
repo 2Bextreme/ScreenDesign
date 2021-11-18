@@ -1,5 +1,6 @@
 package com.example.screendesign.activity
 
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button

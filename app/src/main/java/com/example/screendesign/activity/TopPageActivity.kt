@@ -14,11 +14,16 @@ import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
 import com.example.screendesign.R
 import com.example.screendesign.databinding.ActivityTopPageBinding
+import com.example.screendesign.repository.Repository
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.runBlocking
 
 class TopPageActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityTopPageBinding
+    private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -57,6 +62,7 @@ class TopPageActivity : AppCompatActivity() {
             R.id.action_notification_setting -> {
                 startActivity(Intent(applicationContext,NotificationSettingActivity::class.java))
             }
+
             //パスワード変更
             R.id.action_password_change -> {
                 startActivity(Intent(applicationContext,PasswordChangeActivity::class.java))
@@ -64,7 +70,15 @@ class TopPageActivity : AppCompatActivity() {
 
             //ログアウト
             R.id.action_logout -> {
-                startActivity(Intent(applicationContext,LoginActivity::class.java))
+                repository = Repository(applicationContext)
+                GlobalScope.launch {
+                    val token = repository.get()
+                    if (token != "null"){
+                        repository.logout(token)
+                        repository.set("null")
+                        startActivity(Intent(applicationContext,LoginActivity::class.java))
+                    }
+                }
             }
 
             //メールアドレス変更

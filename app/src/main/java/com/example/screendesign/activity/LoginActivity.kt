@@ -1,18 +1,18 @@
 package com.example.screendesign.activity
 
-import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.example.screendesign.R
 import com.example.screendesign.databinding.ActivityLoginBinding
 import com.example.screendesign.fragment.LoginFragment
+import com.example.screendesign.viewmodel.LoginViewModel
 
-class LoginActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity(){
 
     private lateinit var binding:ActivityLoginBinding
 
-    fun PasswordResettingTransition(view: android.view.View) {
+    fun resetPassword(view: android.view.View) {
         view.setOnClickListener {
             startActivity(Intent(applicationContext,PasswordResettingActivity::class.java))
         }
