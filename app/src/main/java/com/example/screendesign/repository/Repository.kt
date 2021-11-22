@@ -10,6 +10,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 import android.content.SharedPreferences
 import androidx.core.content.edit
 import com.example.screendesign.data.AccessToken
+import com.example.screendesign.data.Result
 
 
 class Repository (
@@ -31,7 +32,7 @@ class Repository (
     val sharedPref:SharedPreferences = context.applicationContext.getSharedPreferences(
         "Users",Context.MODE_PRIVATE)
 
-    //accessTokenのセット
+    //accessTokenのセット・ゲット・チェック
     suspend fun set(
         token:String
     ) = withContext(Dispatchers.Main){
@@ -39,23 +40,25 @@ class Repository (
             putString(KEY_ACCESS_TOKEN,token)
         }
     }
-    //
-
-    //accessTokenのゲット
     suspend fun get(
     ): String = withContext(Dispatchers.Main) {
         return@withContext sharedPref.getString(KEY_ACCESS_TOKEN, null) ?: return@withContext null.toString()
     }
-    //
-
-    suspend fun accessTokenCheck(token:String):AccessToken = withContext(Dispatchers.Main){
+    suspend fun accessTokenCheck(token:String):AccessToken = withContext(Dispatchers.Default){
         return@withContext api.checkAccessToken(token = token)
     }
+    //
 
-    suspend fun checkServer(
-    ) = withContext(Dispatchers.IO) {
-        val test = coroutineContext
-        api.getTopPageString(
+    suspend fun shiftHandOver(
+        year: Int,
+        month: Int,
+        days: List<Int>
+    )= withContext(Dispatchers.IO){
+        api.shiftHandover(
+            token = get(),
+            year = year,
+            month = month,
+            days = days
         )
     }
 
@@ -73,6 +76,5 @@ class Repository (
         api.logout(
             token = token
         )
-
     }
 }

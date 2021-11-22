@@ -1,6 +1,7 @@
 package com.example.screendesign.fragment
 
 
+import android.annotation.SuppressLint
 import android.content.Intent
 import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
@@ -17,6 +18,7 @@ import com.example.screendesign.activity.DesireShiftHandOverVerificationActivity
 import com.example.screendesign.data.ShiftDate
 import com.example.screendesign.databinding.DesireShiftHandOverFragmentBinding
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
+import com.example.screendesign.viewmodel.DesireShiftHandOverViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -34,12 +36,21 @@ class DesireShiftHandOverFragment : Fragment() {
     private lateinit var adapter: DesireShiftHandOverAdapter
     private lateinit var viewModel: DesireShiftHandOverVerificationViewModel
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
         binding = DataBindingUtil.inflate(inflater,
             R.layout.desire_shift_hand_over_fragment, container, false)
+
+        //viewModelを使うためのセット的なもの
+        val viewModel= DesireShiftHandOverViewModel()
+
+        binding.lifecycleOwner = viewLifecycleOwner
+        binding.viewModel = viewModel
+        //
+
 
         //カレンダーの作成,および今月以外の日付を指定できないように設定する。
         var calendar = Calendar.getInstance()
@@ -52,15 +63,15 @@ class DesireShiftHandOverFragment : Fragment() {
         val startOfMonth = calendar.timeInMillis
         binding.calendarView.minDate = startOfMonth
         binding.calendarView.maxDate = endOfMonth
-        val shiftList :ArrayList<ShiftDate> = arrayListOf()
+//        val shiftList :ArrayList<ShiftDate> = arrayListOf()
         //
 
         //呼び出された時点の年月を取得
         var i = 1
         val current = LocalDateTime.now()
-        var formatter = DateTimeFormatter.ofPattern("yyyy/")
+        var formatter = DateTimeFormatter.ofPattern("yyyy")
         val year = current.format(formatter)
-        formatter = DateTimeFormatter.ofPattern("MM/")
+        formatter = DateTimeFormatter.ofPattern("MM")
         val month = current.format(formatter)
         //
 
@@ -72,7 +83,7 @@ class DesireShiftHandOverFragment : Fragment() {
                 i.toString(),
                 isCheck = false
             )
-            shiftList.add(shiftDate)
+            viewModel.shiftDate.add(shiftDate)
             i++
         }
         //
@@ -80,7 +91,7 @@ class DesireShiftHandOverFragment : Fragment() {
         //recyclerViewの構築・設定
         adapter = DesireShiftHandOverAdapter(
             layoutInflater,
-            shiftList,
+            viewModel.shiftDate
         )
 
         layoutManager = LinearLayoutManager(
@@ -108,27 +119,31 @@ class DesireShiftHandOverFragment : Fragment() {
             Log.d("bDate",beforeSelectedDay.toString())
             if (dayOfMonth > beforeSelectedDay){
                 when(dayOfMonth){
-                    shiftList.size -> binding.recyclerView.scrollToPosition(dayOfMonth - 1)
-                    in shiftList.size-2 until shiftList.size ->binding.recyclerView.scrollToPosition(dayOfMonth)
+                    viewModel.shiftDate.size -> binding.recyclerView.scrollToPosition(dayOfMonth - 1)
+                    in viewModel.shiftDate.size-2 until viewModel.shiftDate.size ->binding.recyclerView.scrollToPosition(dayOfMonth)
                     else -> binding.recyclerView.scrollToPosition(dayOfMonth + 2)
                 }
             }else{
                 binding.recyclerView.scrollToPosition(dayOfMonth - 1)
             }
             beforeSelectedDay = dayOfMonth
+            val tmpList = viewModel.shiftDate[dayOfMonth - 1]
+            tmpList.isCheck = !tmpList.isCheck
+            viewModel.shiftDate[dayOfMonth - 1] = tmpList
+            adapter.notifyDataSetChanged()
         }
         //
 
         binding.verificationBtn.setOnClickListener {
             val completeShiftList = ArrayList<ShiftDate>()
             if(binding.radioButton2.isChecked){
-                for(list in shiftList){
+                for(list in viewModel.shiftDate){
                     if(list.isCheck){
                         completeShiftList.add(list)
                     }
                 }
             }else{
-                for(list in shiftList){
+                for(list in viewModel.shiftDate){
                     if(!list.isCheck){
                         completeShiftList.add(list)
                     }

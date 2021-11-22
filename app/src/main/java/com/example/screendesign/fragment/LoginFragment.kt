@@ -40,6 +40,7 @@ class LoginFragment : Fragment(){
             val accessToken = repository.get()
             if (accessToken != "null"){
                 Log.d("Login","すでにログインしています")
+                Log.d("AccessToken",accessToken)
                 if (repository.accessTokenCheck(accessToken).is_valid){
                     Log.d("AccessToken","アクセストークンは有効です")
                     startActivity(Intent(requireContext(), TopPageActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))

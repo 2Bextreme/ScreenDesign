@@ -10,7 +10,7 @@ import com.example.screendesign.databinding.ShiftSubmissionDateItemBinding
 
 class DesireShiftHandOverAdapter (
     private val layoutInflater: LayoutInflater,
-    private val shiftList: List<ShiftDate>
+    private val shiftList: ArrayList<ShiftDate>
 ): RecyclerView.Adapter<DesireShiftHandOverAdapter.ViewHolder>() {
 
     override fun getItemCount() = shiftList.size
