@@ -7,11 +7,17 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.screendesign.R
 import com.example.screendesign.data.ShiftDate
 import com.example.screendesign.databinding.ShiftSubmissionDateItemBinding
+import java.security.PrivateKey
 
 class DesireShiftHandOverAdapter (
     private val layoutInflater: LayoutInflater,
-    private val shiftList: ArrayList<ShiftDate>
+    private val shiftList: ArrayList<ShiftDate>,
+    private val callback:Callback
 ): RecyclerView.Adapter<DesireShiftHandOverAdapter.ViewHolder>() {
+
+    interface Callback {
+        fun deleteItem(shiftDate: ShiftDate)
+    }
 
     override fun getItemCount() = shiftList.size
 
@@ -22,7 +28,7 @@ class DesireShiftHandOverAdapter (
             parent,
             false
         )
-        return ViewHolder(binding)
+        return ViewHolder(binding,callback)
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
@@ -30,18 +36,14 @@ class DesireShiftHandOverAdapter (
     }
 
     class ViewHolder(
-        private val binding: ShiftSubmissionDateItemBinding
+        private val binding: ShiftSubmissionDateItemBinding,
+        private val callback:Callback
     ): RecyclerView.ViewHolder(binding.root) {
         fun bind(shiftDate: ShiftDate) {
             binding.checkBox.isChecked = shiftDate.isCheck
             binding.shiftDate = shiftDate
             binding.checkBox.setOnClickListener{
-                shiftDate.isCheck = !shiftDate.isCheck
-            }
-
-            binding.root.setOnClickListener {
-                shiftDate.isCheck = !shiftDate.isCheck
-                binding.checkBox.isChecked = shiftDate.isCheck
+                callback.deleteItem(shiftDate)
             }
         }
     }

@@ -21,18 +21,11 @@ class ThisMonthShiftConfirmationScreenFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProvider(this)[ThisMonthShiftConfirmationScreenViewModel::class.java]
         return inflater.inflate(
             R.layout.this_month_shift_confirmation_screen_fragment,
             container,
             false
         )
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel =
-            ViewModelProvider(this).get(ThisMonthShiftConfirmationScreenViewModel::class.java)
-        // TODO: Use the ViewModel
-    }
-
 }

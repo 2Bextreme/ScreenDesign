@@ -6,6 +6,7 @@ import android.content.Intent
 import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.screendesign.R
@@ -16,7 +17,6 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
     Worker(appContext, workerParams){
 
     override fun doWork(): Result {
-
         val textTitle = "シフト提出期限が近いです"
         val textContent = "シフトを提出してください。"
         val notificationId = 1
@@ -42,11 +42,6 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
             }
         }
         popNotification()
-        // Indicate whether the work finished successfully with the Result
         return Result.success()
-    }
-
-    override fun onStopped() {
-        super.onStopped()
     }
 }

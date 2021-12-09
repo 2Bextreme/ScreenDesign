@@ -18,6 +18,7 @@ class Repository (
         ){
     companion object{
         private const val KEY_ACCESS_TOKEN = "access_token"
+        private const val KEY_WORK_ID = "work_id"
     }
 
     private val moshi = Moshi.Builder()
@@ -49,6 +50,7 @@ class Repository (
     }
     //
 
+    //シフト提出・削除
     suspend fun shiftHandOver(
         year: Int,
         month: Int,
@@ -61,6 +63,48 @@ class Repository (
             days = days
         )
     }
+    suspend fun deleteShift()= withContext(Dispatchers.Main){
+        api.deleteShift(
+            token = get()
+        )
+    }
+    //
+
+    //メールアドレス変更
+    suspend fun changeMailAddress(
+        mail:String
+    ) = withContext(Dispatchers.Main){
+        api.changeMailAddress(
+            token = get(),
+            mailAddress = mail
+        )
+    }
+
+    //パスワード変更
+    suspend fun changePassword(
+        newPass:String,
+        oldPass:String
+    ) = withContext(Dispatchers.Main){
+        api.changePassword(
+            token = get(),
+            newPass = newPass,
+            oldPass = oldPass
+        )
+    }
+
+    //WorkRequestIDのセット・ゲット
+    suspend fun setWorkId(
+        workId:String
+    ) = withContext(Dispatchers.Main){
+        sharedPref.edit {
+            putString(KEY_WORK_ID,workId)
+        }
+    }
+    suspend fun getWorkId(
+    ): String = withContext(Dispatchers.Main) {
+        return@withContext sharedPref.getString(KEY_WORK_ID, null) ?: return@withContext null.toString()
+    }
+    //
 
     suspend fun login(
         empId :String,

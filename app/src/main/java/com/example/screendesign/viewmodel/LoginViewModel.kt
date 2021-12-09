@@ -1,6 +1,7 @@
 package com.example.screendesign.viewmodel
 
 import android.content.Context
+import android.content.Intent
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
@@ -8,10 +9,14 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.screendesign.R
 import com.example.screendesign.activity.LoginActivity
+import com.example.screendesign.activity.TopPageActivity
 import com.example.screendesign.data.LoginFormState
 import com.example.screendesign.fragment.LoginFragment
 import com.example.screendesign.repository.Repository
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import javax.security.auth.callback.Callback
@@ -21,10 +26,17 @@ class LoginViewModel(
 ) : ViewModel() {
     private val repository = Repository(context)
     val empId = MutableLiveData<String>()
-//    val empId : LiveData<String> = _empId
     val password = MutableLiveData<String>()
-//    val password :LiveData<String> = _password
     var validLogin:Boolean = false
+
+    val isLog :LiveData<Int>
+        get() = _isLog
+    private val _isLog = MutableLiveData<Int>()
+
+    val loginCheck : LiveData<Boolean>
+        get() = _loginCheck
+    private val _loginCheck = MutableLiveData<Boolean>()
+
 
     interface Callback{
         fun moveTopPage()
@@ -34,16 +46,28 @@ class LoginViewModel(
     private val _loginState = MutableLiveData<LoginFormState>()
     val loginState :LiveData<LoginFormState> = _loginState
 
-    suspend fun accessTokenGet():String{
-        return repository.get()
+    fun loginCheck(){
+        viewModelScope.launch {
+            _loginCheck.postValue(true)
+            val accessToken = repository.get()
+            if (accessToken != "null"){
+                Log.d("Login","すでにログインしています")
+                Log.d("AccessToken",accessToken)
+                if (repository.accessTokenCheck(accessToken).is_valid){
+                    Log.d("AccessToken","アクセストークンは有効です")
+                    _isLog.postValue(1)
+                }else{
+                    Log.d("AccessToken","アクセストークンが失効しています")
+                    _isLog.postValue(0)
+                }
+            }else{
+                _isLog.postValue(0)
+                Log.d("Login","ログインしていません")
+            }
+            _loginCheck.postValue(false)
+        }
     }
 
-//    fun getTopPage(){
-//        viewModelScope.launch {
-//            val response = repository.checkServer().text
-//            Log.d("response", response)
-//        }
-//    }
 
     fun login(callback: Callback){
          viewModelScope.launch {

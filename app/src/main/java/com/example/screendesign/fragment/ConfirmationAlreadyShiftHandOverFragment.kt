@@ -14,6 +14,7 @@ import com.example.screendesign.activity.DesireShiftHandOverVerificationActivity
 import com.example.screendesign.databinding.ActivityConfirmationAlreadyShiftHandOverBinding
 import com.example.screendesign.viewmodel.ConfirmationAlreadyShiftHandOverViewModel
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
+import com.example.screendesign.viewmodel.DesireShiftHandOverViewModel
 
 class ConfirmationAlreadyShiftHandOverFragment : Fragment() {
 
@@ -29,6 +30,8 @@ class ConfirmationAlreadyShiftHandOverFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
+        viewModel = ViewModelProvider(this)[ConfirmationAlreadyShiftHandOverViewModel::class.java]
+
         binding = DataBindingUtil.inflate(inflater,
             R.layout.activity_confirmation_already_shift_hand_over, container, false)
 
@@ -39,10 +42,4 @@ class ConfirmationAlreadyShiftHandOverFragment : Fragment() {
 
         return binding.root
     }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel = ViewModelProvider(this).get(ConfirmationAlreadyShiftHandOverViewModel::class.java)
-    }
-
 }

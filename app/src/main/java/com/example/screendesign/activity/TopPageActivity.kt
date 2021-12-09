@@ -6,9 +6,9 @@ import android.content.Context
 import android.content.Intent
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
-import android.widget.Button
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -17,17 +17,10 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.screendesign.R
 import com.example.screendesign.databinding.ActivityTopPageBinding
-import com.example.screendesign.repository.NotificationWorker
 import com.example.screendesign.repository.Repository
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.concurrent.TimeUnit
+import kotlinx.coroutines.*
 
 class TopPageActivity : AppCompatActivity() {
 
@@ -56,21 +49,11 @@ class TopPageActivity : AppCompatActivity() {
                 R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
             ), drawerLayout
         )
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        navView.setupWithNavController(navController)
-
-        val uploadWorkRequest: WorkRequest =
-            PeriodicWorkRequest.Builder(NotificationWorker::class.java,30, TimeUnit.MINUTES).apply {
-                addTag("WorkTag")
-            }.build()
 
         createNotificationChannel() //通知チャンネルの作成
 
-        //通知を起動
-//        WorkManager
-//            .getInstance(applicationContext)
-//            .enqueue(uploadWorkRequest)
-
+        setupActionBarWithNavController(navController, appBarConfiguration)
+        navView.setupWithNavController(navController)
     }
 
     //activity_top_page.xmlにメニュー(top_page)を追加
@@ -96,12 +79,12 @@ class TopPageActivity : AppCompatActivity() {
             //ログアウト
             R.id.action_logout -> {
                 repository = Repository(applicationContext)
-                GlobalScope.launch {
+                CoroutineScope(Dispatchers.IO).launch {
                     val token = repository.get()
                     if (token != "null"){
                         repository.logout(token)
                         repository.set("null")
-                        startActivity(Intent(applicationContext,LoginActivity::class.java))
+                        startActivity(Intent(applicationContext,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
                     }
                 }
             }
@@ -117,11 +100,6 @@ class TopPageActivity : AppCompatActivity() {
     }
     //
 
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.nav_host_fragment_content_top_page)
-        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
-    }
-
     private fun createNotificationChannel() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             val name = "テストチャンネル"
@@ -136,4 +114,10 @@ class TopPageActivity : AppCompatActivity() {
             notificationManager.createNotificationChannel(channel)
         }
     }
+    override fun onSupportNavigateUp(): Boolean {
+        val navController = findNavController(R.id.nav_host_fragment_content_top_page)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+
 }

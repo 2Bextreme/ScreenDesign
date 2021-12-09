@@ -2,30 +2,25 @@ package com.example.screendesign.fragment
 
 import android.content.Context
 import android.content.Intent
-import androidx.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.screendesign.R
-import com.example.screendesign.adapter.DesireShiftHandOverAdapter
 import com.example.screendesign.activity.TopPageActivity
 import com.example.screendesign.adapter.DesireShiftHandOverVerificationAdapter
 import com.example.screendesign.data.ShiftDate
-import com.example.screendesign.data.ShiftList
 import com.example.screendesign.databinding.DesireShiftHandOverVerificationFragmentBinding
 import com.example.screendesign.repository.Repository
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
-import com.example.screendesign.viewmodel.DesireShiftHandOverViewModel
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.runBlocking
-import java.util.*
 import kotlin.collections.ArrayList
 
 
@@ -106,8 +101,8 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
                 }
                 repository = Repository(requireContext())
 
-                GlobalScope.launch {
-                    System.err.println("start")
+                CoroutineScope(Dispatchers.IO).launch {
+                    repository.deleteShift()
                     val result = repository.shiftHandOver(
                         year = year.toInt(),
                         month = month.toInt(),

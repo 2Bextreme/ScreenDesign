@@ -10,6 +10,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.graphics.blue
+import androidx.core.graphics.green
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.screendesign.R
@@ -19,6 +21,7 @@ import com.example.screendesign.data.ShiftDate
 import com.example.screendesign.databinding.DesireShiftHandOverFragmentBinding
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
 import com.example.screendesign.viewmodel.DesireShiftHandOverViewModel
+import com.example.screendesign.viewmodel.ThisMonthShiftConfirmationScreenViewModel
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
 import java.util.*
@@ -34,7 +37,7 @@ class DesireShiftHandOverFragment : Fragment() {
     private lateinit var binding:DesireShiftHandOverFragmentBinding
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: DesireShiftHandOverAdapter
-    private lateinit var viewModel: DesireShiftHandOverVerificationViewModel
+    private lateinit var viewModel: DesireShiftHandOverViewModel
 
     @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
@@ -45,7 +48,7 @@ class DesireShiftHandOverFragment : Fragment() {
             R.layout.desire_shift_hand_over_fragment, container, false)
 
         //viewModelを使うためのセット的なもの
-        val viewModel= DesireShiftHandOverViewModel()
+        viewModel = ViewModelProvider(this)[DesireShiftHandOverViewModel::class.java]
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
@@ -54,45 +57,33 @@ class DesireShiftHandOverFragment : Fragment() {
 
         //カレンダーの作成,および今月以外の日付を指定できないように設定する。
         var calendar = Calendar.getInstance()
-        calendar[Calendar.DATE] = calendar.getActualMaximum(Calendar.DATE)
-        calendar[Calendar.HOUR_OF_DAY] = 23
-        val endOfMonth = calendar.timeInMillis
-        calendar = Calendar.getInstance()
+        calendar[Calendar.MONTH] = calendar.get(Calendar.MONTH) + 1
         calendar[Calendar.DATE] = 1
         calendar[Calendar.HOUR_OF_DAY] = 0
         val startOfMonth = calendar.timeInMillis
+        calendar = Calendar.getInstance()
+        calendar[Calendar.MONTH] = calendar.get(Calendar.MONTH) + 1
+        calendar[Calendar.DATE] =  calendar.getActualMaximum(Calendar.DATE)
+        calendar[Calendar.HOUR_OF_DAY] = 23
+        val endOfMonth = calendar.timeInMillis
         binding.calendarView.minDate = startOfMonth
         binding.calendarView.maxDate = endOfMonth
-//        val shiftList :ArrayList<ShiftDate> = arrayListOf()
         //
 
-        //呼び出された時点の年月を取得
-        var i = 1
-        val current = LocalDateTime.now()
-        var formatter = DateTimeFormatter.ofPattern("yyyy")
-        val year = current.format(formatter)
-        formatter = DateTimeFormatter.ofPattern("MM")
-        val month = current.format(formatter)
-        //
-
-        //recyclerViewで使う今月の日付リストを作成
-        while (i <= calendar.getActualMaximum(Calendar.DATE)){
-            val shiftDate = ShiftDate(
-                year,
-                month,
-                i.toString(),
-                isCheck = false
-            )
-            viewModel.shiftDate.add(shiftDate)
-            i++
+        val openDetailListener = object : DesireShiftHandOverAdapter.Callback {
+            override fun deleteItem(shiftDate: ShiftDate) {
+                viewModel.shiftDate.remove(shiftDate)
+                adapter.notifyDataSetChanged()
+            }
         }
-        //
 
         //recyclerViewの構築・設定
         adapter = DesireShiftHandOverAdapter(
             layoutInflater,
-            viewModel.shiftDate
+            viewModel.shiftDate,
+            openDetailListener
         )
+        adapter.notifyDataSetChanged()
 
         layoutManager = LinearLayoutManager(
             requireContext(),
@@ -106,47 +97,30 @@ class DesireShiftHandOverFragment : Fragment() {
         }
         //
 
-        //クリックした日付をrecyclerViewの一番上で表示するための日付を現在の日付で初期化
-        formatter = DateTimeFormatter.ofPattern("dd")
-        val day = Integer.parseInt(current.format(formatter))
-        binding.calendarView.isFocusable = false
-        var beforeSelectedDay = day
-        //
-
         //クリックした日付をrecyclerViewの一番上で表示
-        binding.calendarView.setOnDateChangeListener { view, _, _, dayOfMonth ->
+        binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             Log.d("date",dayOfMonth.toString())
-            Log.d("bDate",beforeSelectedDay.toString())
-            if (dayOfMonth > beforeSelectedDay){
-                when(dayOfMonth){
-                    viewModel.shiftDate.size -> binding.recyclerView.scrollToPosition(dayOfMonth - 1)
-                    in viewModel.shiftDate.size-2 until viewModel.shiftDate.size ->binding.recyclerView.scrollToPosition(dayOfMonth)
-                    else -> binding.recyclerView.scrollToPosition(dayOfMonth + 2)
-                }
+            val shiftDate = ShiftDate(
+                year = year.toString(),
+                month = month.inc().toString(),
+                day = dayOfMonth.toString(),
+                isCheck = true
+            )
+            if(viewModel.shiftDate.isEmpty() || !viewModel.shiftDate.contains(shiftDate)){
+                viewModel.shiftDate.add(shiftDate)
             }else{
-                binding.recyclerView.scrollToPosition(dayOfMonth - 1)
+                viewModel.shiftDate.remove(shiftDate)
             }
-            beforeSelectedDay = dayOfMonth
-            val tmpList = viewModel.shiftDate[dayOfMonth - 1]
-            tmpList.isCheck = !tmpList.isCheck
-            viewModel.shiftDate[dayOfMonth - 1] = tmpList
+            viewModel.shiftDate.sortBy { it.day.toInt() }
             adapter.notifyDataSetChanged()
         }
         //
 
         binding.verificationBtn.setOnClickListener {
             val completeShiftList = ArrayList<ShiftDate>()
-            if(binding.radioButton2.isChecked){
-                for(list in viewModel.shiftDate){
-                    if(list.isCheck){
-                        completeShiftList.add(list)
-                    }
-                }
-            }else{
-                for(list in viewModel.shiftDate){
-                    if(!list.isCheck){
-                        completeShiftList.add(list)
-                    }
+            for(list in viewModel.shiftDate){
+                if(list.isCheck){
+                    completeShiftList.add(list)
                 }
             }
 
@@ -156,12 +130,7 @@ class DesireShiftHandOverFragment : Fragment() {
             startActivity(intent)
         }
 
-        return binding.root
-    }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        viewModel =
-            ViewModelProvider(this).get(DesireShiftHandOverVerificationViewModel::class.java)
+        return binding.root
     }
 }

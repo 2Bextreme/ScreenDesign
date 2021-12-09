@@ -3,18 +3,30 @@ package com.example.screendesign.repository
 import com.example.screendesign.data.AccessToken
 import com.example.screendesign.data.Result
 import com.example.screendesign.data.SeverBody
-import retrofit2.http.GET
-import retrofit2.http.Header
-import retrofit2.http.POST
-import retrofit2.http.Query
+import retrofit2.http.*
 
 interface Api {
-    @POST("api/v1/auth/public")
+    @POST("api/auth/public")
     suspend fun getTopPageString(
     ): SeverBody
 
+    //パスワード変更
+    @POST("api/auth_info/password")
+    suspend fun changePassword(
+        @Header("Authorization") token:String,
+        @Query("newPassword") newPass:String,
+        @Query("oldPassword") oldPass:String
+    ) :Result
+
+    //メールアドレス変更
+    @POST("api/employee/change_mailAddress")
+    suspend fun changeMailAddress(
+        @Header("Authorization") token:String,
+        @Query("mailAddress") mailAddress:String
+    )
+
     //シフト提出
-    @POST("api/v1/shift/shift_request")
+    @POST("api/shift/shift_request")
     suspend fun shiftHandover(
         @Header("Authorization") token:String,
         @Query("year") year:Int,
@@ -22,21 +34,28 @@ interface Api {
         @Query("days") days:List<Int>
     ) :Result
 
+    //提出済みシフト削除
+    @DELETE("api/shift/shift_request")
+    suspend fun deleteShift(
+        @Header("Authorization") token:String
+    )
+
+
     //ログイン
-    @POST("api/v1/auth/login")
+    @POST("api/auth/login")
     suspend fun login(
         @Query("employeeId") empId: String,
         @Query("password") password: String
     ) :AccessToken
 
     //ログアウト
-    @POST("api/v1/auth/logout")
+    @POST("api/auth/logout")
     suspend fun logout(
         @Header("Authorization") token:String
     )
 
     //アクセストークンチェック
-    @GET("api/v1/auth/check_access_token")
+    @GET("api/auth/check_access_token")
     suspend fun checkAccessToken(
         @Header("Authorization") token:String
     ) :AccessToken
