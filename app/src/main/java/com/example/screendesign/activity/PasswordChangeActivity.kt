@@ -57,6 +57,7 @@ class PasswordChangeActivity : AppCompatActivity() {
 
         viewModel.isChanging.observe(this,{
             Log.d("observe",it.toString())
+            Log.d("Log",viewModel.isLog.value.toString())
             if(!it && viewModel.isLog.value != null){
                 runSnackBar(viewModel.isLog.value!!)
                 if (viewModel.isLog.value!! == 1){

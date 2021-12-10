@@ -5,6 +5,7 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.*
 import com.example.screendesign.repository.Repository
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 class PasswordChangeViewModel(
@@ -42,20 +43,17 @@ class PasswordChangeViewModel(
                     ).result
                     Log.d("result",ret.toString())
                     if (ret){
-                        Log.d("log","1")
                         _isLog.postValue(1)
                     }else{
-                        Log.d("log","99")
                         _isLog.postValue(99)
                     }
                 }else{
-                    Log.d("log","3")
                     _isLog.postValue(3)
                 }
             }else{
-                Log.d("log","2")
                 _isLog.postValue(2)
             }
+            delay(100)
             _isChanging.postValue(false)
         }
     }
