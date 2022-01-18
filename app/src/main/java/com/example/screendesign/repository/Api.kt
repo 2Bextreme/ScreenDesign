@@ -3,12 +3,17 @@ package com.example.screendesign.repository
 import com.example.screendesign.data.AccessToken
 import com.example.screendesign.data.Result
 import com.example.screendesign.data.SeverBody
+import com.example.screendesign.data.ToMonthShitList
 import retrofit2.http.*
 
 interface Api {
-    @POST("api/auth/public")
-    suspend fun getTopPageString(
-    ): SeverBody
+    //当月のシフト取得
+    @GET("api/shift/shift_check")
+    suspend fun shiftCheck(
+        @Header("Authorization") token:String,
+        @Query("year") year:Int,
+        @Query("month") month:Int
+    ): ToMonthShitList
 
     //パスワード変更
     @POST("api/auth_info/password")
@@ -18,6 +23,13 @@ interface Api {
         @Query("oldPassword") oldPass:String
     ) :Result
 
+    //パスワードを忘れた時用
+    @POST("api/auth_info/forget_password")
+    suspend fun forgetPassword(
+        @Query("employeeId") empId:String,
+        @Query("mailAddress") mailAddress:String
+    ) : Result
+
     //メールアドレス変更
     @POST("api/employee/change_mailAddress")
     suspend fun changeMailAddress(
@@ -26,7 +38,7 @@ interface Api {
     )
 
     //シフト提出
-    @POST("api/shift/shift_request")
+    @POST("shift_hope")
     suspend fun shiftHandover(
         @Header("Authorization") token:String,
         @Query("year") year:Int,
@@ -34,11 +46,12 @@ interface Api {
         @Query("days") days:List<Int>
     ) :Result
 
+
     //提出済みシフト削除
-    @DELETE("api/shift/shift_request")
+    @DELETE("shift_hope")
     suspend fun deleteShift(
         @Header("Authorization") token:String
-    )
+    ) :Result
 
 
     //ログイン

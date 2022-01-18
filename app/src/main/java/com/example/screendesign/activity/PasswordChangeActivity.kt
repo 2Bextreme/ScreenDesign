@@ -55,14 +55,11 @@ class PasswordChangeActivity : AppCompatActivity() {
             binding.passwordChangeConfirmBtn.isEnabled = !(viewModel.notGoodSizePass1 || viewModel.notGoodSizePass2)
         })
 
-        viewModel.isChanging.observe(this,{
+        viewModel.isLog.observe(this,{
             Log.d("observe",it.toString())
-            Log.d("Log",viewModel.isLog.value.toString())
-            if(!it && viewModel.isLog.value != null){
-                runSnackBar(viewModel.isLog.value!!)
-                if (viewModel.isLog.value!! == 1){
-                    startActivity(Intent(applicationContext,TopPageActivity::class.java))
-                }
+            runSnackBar(it)
+            if(it == 1){
+                startActivity(Intent(this,TopPageActivity::class.java))
             }
         })
 
@@ -76,6 +73,7 @@ class PasswordChangeActivity : AppCompatActivity() {
             1 -> Snackbar.make(binding.root, "パスワードを変更しました。", Snackbar.LENGTH_SHORT).show()
             2 -> Snackbar.make(binding.root, "パスワードが一致していません。", Snackbar.LENGTH_SHORT).show()
             3 -> Snackbar.make(binding.root, "現在のパスワードを入力してください。", Snackbar.LENGTH_SHORT).show()
+            98 -> return
             else -> Snackbar.make(binding.root, "何らかのエラーが発生しました。", Snackbar.LENGTH_SHORT).show()
         }
     }

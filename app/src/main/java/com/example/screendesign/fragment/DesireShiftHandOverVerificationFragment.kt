@@ -9,6 +9,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.screendesign.R
 import com.example.screendesign.activity.TopPageActivity
@@ -17,6 +18,10 @@ import com.example.screendesign.data.ShiftDate
 import com.example.screendesign.databinding.DesireShiftHandOverVerificationFragmentBinding
 import com.example.screendesign.repository.Repository
 import com.example.screendesign.viewmodel.DesireShiftHandOverVerificationViewModel
+import com.example.screendesign.viewmodel.PasswordChangeViewModel
+import com.example.screendesign.viewmodelfactory.DesireShiftHandOverVerificationViewModelFactory
+import com.example.screendesign.viewmodelfactory.PasswordChangeViewModelFactory
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
@@ -47,7 +52,7 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
     private lateinit var binding: DesireShiftHandOverVerificationFragmentBinding
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: DesireShiftHandOverVerificationAdapter
-    private lateinit var repository : Repository
+    private lateinit var viewModel:DesireShiftHandOverVerificationViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -58,19 +63,21 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
             R.layout.desire_shift_hand_over_verification_fragment, container, false
         )
 
-        val shiftList = requireArguments().getSerializable("FILE_KEY") as ArrayList<ShiftDate>
+
 
         //viewModelを使うためのセット的なもの
-        val viewModel = DesireShiftHandOverVerificationViewModel()
+        viewModel = ViewModelProvider(this, DesireShiftHandOverVerificationViewModelFactory(requireContext()))[DesireShiftHandOverVerificationViewModel::class.java]
 
         binding.lifecycleOwner = viewLifecycleOwner
         binding.viewModel = viewModel
         //
 
+        viewModel.shiftList = requireArguments().getSerializable("FILE_KEY") as ArrayList<ShiftDate>
+
         //recyclerViewの構築・設定
         adapter = DesireShiftHandOverVerificationAdapter(
             layoutInflater,
-            shiftList
+            viewModel.shiftList
         )
 
         layoutManager = LinearLayoutManager(
@@ -88,36 +95,33 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
         binding.fixBtn.setOnClickListener {
             callback?.clickFixBtn()
         }
-        Log.d("shiftList",shiftList.toString())
-        if (shiftList.isEmpty()){
+
+        Log.d("shiftList",viewModel.shiftList.toString())
+
+        if (viewModel.shiftList.isEmpty()){
             binding.verificationBtn2.isEnabled = false
         }else{
             binding.verificationBtn2.setOnClickListener {
-                val year = shiftList.get(index = 0).year
-                val month = shiftList.get(index = 0).month
-                val days = ArrayList<Int>()
-                shiftList.forEach {
-                    days.add(it.day.toInt())
-                }
-                repository = Repository(requireContext())
-
-                CoroutineScope(Dispatchers.IO).launch {
-                    repository.deleteShift()
-                    val result = repository.shiftHandOver(
-                        year = year.toInt(),
-                        month = month.toInt(),
-                        days = days.toList()
-                    ).result
-                    Log.d("result",result.toString())
-                    Log.d("shiftList", "${year}/${month}/${days}")
-                    if (result){
-                        val intent = Intent(requireContext(), TopPageActivity::class.java)
-                        startActivity(intent)
-                    }
-                }
+                viewModel.ShiftHandOver()
             }
         }
 
+        viewModel.isLog.observe(viewLifecycleOwner,{
+            runSnackBar(it)
+            if(it == 1){
+                val intent = Intent(requireContext(), TopPageActivity::class.java)
+                startActivity(intent)
+            }
+
+        })
+
         return binding.root
+    }
+    private fun runSnackBar(log:Int){
+        when(log){
+            1 -> Snackbar.make(binding.root, "シフトを提出しました。", Snackbar.LENGTH_SHORT).show()
+            2 -> Snackbar.make(binding.root, "シフトが提出できませんでした。", Snackbar.LENGTH_SHORT).show()
+            else -> return
+        }
     }
 }

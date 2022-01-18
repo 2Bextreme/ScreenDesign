@@ -1,14 +1,12 @@
 package com.example.screendesign.viewmodel
 
+import android.app.Application
 import android.content.Context
 import android.content.Intent
 import android.util.Log
 import android.util.Patterns
 import android.widget.Toast
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.*
 import com.example.screendesign.R
 import com.example.screendesign.activity.LoginActivity
 import com.example.screendesign.activity.TopPageActivity
@@ -23,7 +21,7 @@ import javax.security.auth.callback.Callback
 
 class LoginViewModel(
     context: Context
-) : ViewModel() {
+) :ViewModel() {
     private val repository = Repository(context)
     val empId = MutableLiveData<String>()
     val password = MutableLiveData<String>()

@@ -2,21 +2,23 @@ package com.example.screendesign.activity
 
 import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
-import androidx.preference.PreferenceFragmentCompat
-import com.example.screendesign.R
+import com.example.screendesign.databinding.NotificationSettingActivityBinding
 
 class NotificationSettingActivity : AppCompatActivity() {
 
+    private lateinit var binding:NotificationSettingActivityBinding
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.notification_setting_activity)
+        binding = NotificationSettingActivityBinding.inflate(layoutInflater)
+        setContentView(binding.root)
 
-        val confirmBtn:Button = findViewById(R.id.notificationConfirmBtn)
 
-        confirmBtn.setOnClickListener {
-            startActivity(Intent(applicationContext,TopPageActivity::class.java))
+        binding.notificationConfirmBtn.setOnClickListener {
+            Log.d("switch",binding.switch1.isChecked.toString())
+//            startActivity(Intent(applicationContext,TopPageActivity::class.java))
         }
     }
 }

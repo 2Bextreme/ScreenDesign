@@ -97,7 +97,7 @@ class DesireShiftHandOverFragment : Fragment() {
         }
         //
 
-        //クリックした日付をrecyclerViewの一番上で表示
+        //クリックした日付をrecyclerViewに追加
         binding.calendarView.setOnDateChangeListener { _, year, month, dayOfMonth ->
             Log.d("date",dayOfMonth.toString())
             val shiftDate = ShiftDate(

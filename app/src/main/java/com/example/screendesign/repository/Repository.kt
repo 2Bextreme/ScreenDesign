@@ -8,6 +8,7 @@ import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import android.content.SharedPreferences
+import android.util.Log
 import androidx.core.content.edit
 import com.example.screendesign.data.AccessToken
 import com.example.screendesign.data.Result
@@ -18,7 +19,6 @@ class Repository (
         ){
     companion object{
         private const val KEY_ACCESS_TOKEN = "access_token"
-        private const val KEY_WORK_ID = "work_id"
     }
 
     private val moshi = Moshi.Builder()
@@ -32,6 +32,18 @@ class Repository (
 
     val sharedPref:SharedPreferences = context.applicationContext.getSharedPreferences(
         "Users",Context.MODE_PRIVATE)
+
+    //当月のシフト取得
+    suspend fun getToMonthShiftList(
+        year: Int,
+        month: Int
+    ) = withContext(Dispatchers.IO){
+        api.shiftCheck(
+            token = get(),
+            year = year,
+            month = month
+        )
+    }
 
     //accessTokenのセット・ゲット・チェック
     suspend fun set(
@@ -70,6 +82,17 @@ class Repository (
     }
     //
 
+    //パスワード変更(ログインしていないとき)
+    suspend fun forgetPassword(
+        empId :String,
+        mailAddress:String
+    ) = withContext(Dispatchers.IO){
+        api.forgetPassword(
+            empId = empId,
+            mailAddress = mailAddress
+        )
+    }
+
     //メールアドレス変更
     suspend fun changeMailAddress(
         mail:String
@@ -91,20 +114,6 @@ class Repository (
             oldPass = oldPass
         )
     }
-
-    //WorkRequestIDのセット・ゲット
-    suspend fun setWorkId(
-        workId:String
-    ) = withContext(Dispatchers.Main){
-        sharedPref.edit {
-            putString(KEY_WORK_ID,workId)
-        }
-    }
-    suspend fun getWorkId(
-    ): String = withContext(Dispatchers.Main) {
-        return@withContext sharedPref.getString(KEY_WORK_ID, null) ?: return@withContext null.toString()
-    }
-    //
 
     suspend fun login(
         empId :String,

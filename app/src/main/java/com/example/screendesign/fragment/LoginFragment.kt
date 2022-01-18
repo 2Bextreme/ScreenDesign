@@ -4,9 +4,11 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.EditorInfo
 import android.widget.EditText
 import android.widget.Toast
 import androidx.databinding.DataBindingUtil
@@ -61,6 +63,16 @@ class LoginFragment : Fragment(){
 
         binding.login.setOnClickListener {
             viewModel.login(openDetailListener)
+        }
+
+        binding.password.setOnEditorActionListener { _, actionId, _ ->
+
+            if(actionId == 0 && !binding.password.text.isNullOrBlank() && !binding.username.text.isNullOrBlank()){
+                viewModel.login(openDetailListener)
+            }else{
+                Toast.makeText(requireContext(),"値を入力してください。",Toast.LENGTH_SHORT).show()
+            }
+            return@setOnEditorActionListener false
         }
 
         binding.username.afterTextChanged {

@@ -10,7 +10,7 @@ import kotlinx.coroutines.launch
 
 class PasswordChangeViewModel(
     context: Context
-) : AndroidViewModel(context as Application) ,LifecycleObserver{
+) :ViewModel() {
     private val repository = Repository(context)
     val oldPass = MutableLiveData<String>()
     val newPass1 = MutableLiveData<String>()
@@ -20,17 +20,17 @@ class PasswordChangeViewModel(
     var notGoodSizePass2 :Boolean = true
     var notMatchPass :Boolean = true
 
-    val isChanging :LiveData<Boolean>
-        get() = _isChanging
-    private val _isChanging = MutableLiveData<Boolean>()
-
-    val isLog :LiveData<Int>
+    val isLog :MutableLiveData<Int>
         get() = _isLog
     private val _isLog = MutableLiveData<Int>()
 
+//    val isChanging :LiveData<Boolean>
+//        get() = _isChanging
+//    private val _isChanging = MutableLiveData<Boolean>()
+
     fun passwordChange(){
         viewModelScope.launch {
-            _isChanging.postValue(true)
+            _isLog.postValue(98)
             val pass1snap = newPass1.value
             val oldPassSnap = oldPass.value
             Log.d("result",pass1snap.toString())
@@ -53,8 +53,6 @@ class PasswordChangeViewModel(
             }else{
                 _isLog.postValue(2)
             }
-            delay(100)
-            _isChanging.postValue(false)
         }
     }
 }

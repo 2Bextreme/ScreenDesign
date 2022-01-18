@@ -1,20 +1,28 @@
 package com.example.screendesign.repository
 
+import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent
 import android.content.Context
 import android.content.Intent
-import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.work.WorkManager
 import androidx.work.Worker
 import androidx.work.WorkerParameters
 import com.example.screendesign.R
 import com.example.screendesign.activity.DesireShiftHandOverActivity
 import com.example.screendesign.activity.TopPageActivity
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
     Worker(appContext, workerParams){
+
+    private lateinit var repository:NotificationRepository
 
     override fun doWork(): Result {
         val textTitle = "シフト提出期限が近いです"
@@ -25,6 +33,7 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
             flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
         }
 
+        repository = NotificationRepository(applicationContext)
         val pendingIntent: PendingIntent =
             PendingIntent.getActivity(applicationContext, 0, intent, PendingIntent.FLAG_IMMUTABLE)
 
@@ -36,11 +45,8 @@ class NotificationWorker (appContext: Context, workerParams: WorkerParameters):
             .setContentIntent(pendingIntent)
             .setAutoCancel(true)
 
-        fun popNotification() {
-            with(NotificationManagerCompat.from(applicationContext)) {
-                notify(notificationId, builder.build())
-            }
-        }
+        fun popNotification() { with(NotificationManagerCompat.from(applicationContext)) { notify(notificationId, builder.build())
+                } }
         popNotification()
         return Result.success()
     }
