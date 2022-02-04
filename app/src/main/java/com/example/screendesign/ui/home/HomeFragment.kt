@@ -34,17 +34,17 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireContext(),DesireShiftHandOverActivity::class.java))
         }
 
-        binding.notiCheck?.setOnClickListener {
-            homeViewModel.checkNotification()
-        }
-
-        binding.notiStart.setOnClickListener {
-            homeViewModel.notificationStart()
-        }
-
-        binding.notiEnd.setOnClickListener {
-            homeViewModel.notificationEnd()
-        }
+//        binding.notiCheck?.setOnClickListener {
+//            homeViewModel.checkNotification()
+//        }
+//
+//        binding.notiStart.setOnClickListener {
+//            homeViewModel.notificationStart()
+//        }
+//
+//        binding.notiEnd.setOnClickListener {
+//            homeViewModel.notificationEnd()
+//        }
 
         return root
     }

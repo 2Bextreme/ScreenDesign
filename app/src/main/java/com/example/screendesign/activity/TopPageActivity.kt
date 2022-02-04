@@ -1,11 +1,13 @@
 package com.example.screendesign.activity
 
+import android.annotation.SuppressLint
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.widget.TextView
 import com.google.android.material.navigation.NavigationView
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -14,15 +16,11 @@ import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.work.PeriodicWorkRequest
-import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.example.screendesign.R
 import com.example.screendesign.databinding.ActivityTopPageBinding
 import com.example.screendesign.repository.Repository
 import kotlinx.coroutines.*
 import java.util.*
-import java.util.concurrent.TimeUnit
 
 class TopPageActivity : AppCompatActivity() {
 
@@ -32,7 +30,6 @@ class TopPageActivity : AppCompatActivity() {
 
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityTopPageBinding
-    private lateinit var repository: Repository
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,7 +45,7 @@ class TopPageActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow
+                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow,R.id.nav_configuration
             ), drawerLayout
         )
 
@@ -56,48 +53,6 @@ class TopPageActivity : AppCompatActivity() {
         navView.setupWithNavController(navController)
     }
 
-    //activity_top_page.xmlにメニュー(top_page)を追加
-    override fun onCreateOptionsMenu(menu: Menu): Boolean {
-        menuInflater.inflate(R.menu.top_page, menu)
-        return true
-    }
-    //
-
-    //メニューをクリックしたときの処理
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            //通知設定
-            R.id.action_notification_setting -> {
-                startActivity(Intent(applicationContext,NotificationSettingActivity::class.java))
-            }
-
-            //パスワード変更
-            R.id.action_password_change -> {
-                startActivity(Intent(applicationContext,PasswordChangeActivity::class.java))
-            }
-
-            //ログアウト
-            R.id.action_logout -> {
-                repository = Repository(applicationContext)
-                CoroutineScope(Dispatchers.IO).launch {
-                    val token = repository.get()
-                    if (token != "null"){
-                        repository.logout(token)
-                        repository.set("null")
-                        startActivity(Intent(applicationContext,LoginActivity::class.java).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK))
-                    }
-                }
-            }
-
-            //メールアドレス変更
-            R.id.action_mailaddress_chenge -> {
-                startActivity(Intent(applicationContext,MailAddressChangeActivity::class.java))
-            }
-
-            else -> return super.onOptionsItemSelected(item)
-        }
-        return false
-    }
 
     private fun createNotificationChannel() {
         val name = "テストチャンネル"

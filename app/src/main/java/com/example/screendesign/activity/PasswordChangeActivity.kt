@@ -56,6 +56,7 @@ class PasswordChangeActivity : AppCompatActivity() {
         })
 
         viewModel.isLog.observe(this,{
+            binding.passwordChangeConfirmBtn.isEnabled = it != 98
             Log.d("observe",it.toString())
             runSnackBar(it)
             if(it == 1){

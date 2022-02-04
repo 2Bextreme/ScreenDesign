@@ -17,7 +17,7 @@ class LoginActivity : AppCompatActivity(){
     private lateinit var binding:ActivityLoginBinding
     private lateinit var viewModel:LoginViewModel
 
-    fun resetPassword(view: View) {
+    fun resetPassword(notUse:View) {
         startActivity(Intent(applicationContext,PasswordResettingActivity::class.java))
     }
 

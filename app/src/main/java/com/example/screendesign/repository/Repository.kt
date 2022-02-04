@@ -19,6 +19,8 @@ class Repository (
         ){
     companion object{
         private const val KEY_ACCESS_TOKEN = "access_token"
+        private const val KEY_USER_ID = "user_id"
+        private const val KEY_NOTIFICATION = "notification"
     }
 
     private val moshi = Moshi.Builder()
@@ -45,6 +47,18 @@ class Repository (
         )
     }
 
+    //提出した自身のシフトを取得
+    suspend fun getSubmittedShift(
+        year: Int,
+        month: Int
+    ) = withContext(Dispatchers.IO){
+        api.getSubmittedShift(
+            token = get(),
+            year = year,
+            month = month
+        )
+    }
+
     //accessTokenのセット・ゲット・チェック
     suspend fun set(
         token:String
@@ -55,10 +69,39 @@ class Repository (
     }
     suspend fun get(
     ): String = withContext(Dispatchers.Main) {
-        return@withContext sharedPref.getString(KEY_ACCESS_TOKEN, null) ?: return@withContext null.toString()
+        return@withContext sharedPref.getString(KEY_ACCESS_TOKEN, null) ?: null.toString()
     }
     suspend fun accessTokenCheck(token:String):AccessToken = withContext(Dispatchers.Default){
         return@withContext api.checkAccessToken(token = token)
+    }
+    //
+
+    //userIdのセット・ゲット
+    suspend fun setUserId(
+            userId:String
+    ) = withContext(Dispatchers.Main){
+        sharedPref.edit {
+            putString(KEY_USER_ID,userId)
+        }
+    }
+    suspend fun getUserId(
+    ): String = withContext(Dispatchers.Main) {
+        return@withContext sharedPref.getString(KEY_USER_ID, null) ?: null.toString()
+    }
+    //
+
+    //通知の有無
+    suspend fun setNotification(
+        bool:String,
+        userId: String
+    ) = withContext(Dispatchers.Main){
+        sharedPref.edit {
+            putString(KEY_NOTIFICATION + userId,bool)
+        }
+    }
+    suspend fun getNotification(
+    ): String = withContext(Dispatchers.Main) {
+        return@withContext sharedPref.getString(KEY_NOTIFICATION + getUserId(), null) ?: null.toString()
     }
     //
 
@@ -75,6 +118,7 @@ class Repository (
             days = days
         )
     }
+
     suspend fun deleteShift()= withContext(Dispatchers.Main){
         api.deleteShift(
             token = get()
@@ -110,7 +154,8 @@ class Repository (
     ) = withContext(Dispatchers.Main){
         api.changePassword(
             token = get(),
-            newPass = newPass,
+            newPass1 = newPass,
+            newPass2 = newPass,
             oldPass = oldPass
         )
     }

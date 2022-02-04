@@ -24,10 +24,6 @@ class PasswordChangeViewModel(
         get() = _isLog
     private val _isLog = MutableLiveData<Int>()
 
-//    val isChanging :LiveData<Boolean>
-//        get() = _isChanging
-//    private val _isChanging = MutableLiveData<Boolean>()
-
     fun passwordChange(){
         viewModelScope.launch {
             _isLog.postValue(98)

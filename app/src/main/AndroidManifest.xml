@@ -7,9 +7,9 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/screen_design_launcher"
         android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
+        android:roundIcon="@mipmap/screen_design_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.ScreenDesign"
         android:usesCleartextTraffic="true">
@@ -40,10 +40,6 @@
             android:exported="true"
             android:label="@string/title_activity_top_page"
             android:theme="@style/Theme.ScreenDesign.NoActionBar"/>
-
-        <activity
-            android:name=".activity.ThisMonthShiftConfirmationScreenActivity"
-            android:exported="false" />
         <activity
             android:name=".activity.ConfirmationAlreadyShiftHandOverActivity"
             android:exported="false" />
@@ -52,9 +48,6 @@
             android:exported="false" />
         <activity
             android:name=".activity.DesireShiftHandOverVerificationActivity"
-            android:exported="false" />
-        <activity
-            android:name=".activity.ConfigurationActivity"
             android:exported="false" />
         <activity
             android:name=".activity.SalaryConfirmationScreenActivity"

@@ -1,5 +1,6 @@
 package com.example.screendesign.ui.gallery
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -21,6 +22,7 @@ class GalleryFragment : Fragment() {
     private lateinit var layoutManager: LinearLayoutManager
     private lateinit var adapter: ToMonthShiftListAdapter
 
+    @SuppressLint("NotifyDataSetChanged")
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -35,12 +37,12 @@ class GalleryFragment : Fragment() {
         Log.d("month",calendar.get(Calendar.YEAR).toString())
 
         _binding = FragmentGalleryBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+
 
         //recyclerViewの構築・設定
         adapter = ToMonthShiftListAdapter(
             layoutInflater,
-            viewModel.shiftList.value
+            viewModel.shiftList
         )
 
         layoutManager = LinearLayoutManager(
@@ -50,14 +52,22 @@ class GalleryFragment : Fragment() {
         )
 
         binding.recyclerView2.also {
-            it?.layoutManager = layoutManager
-            it?.adapter = adapter
+            it.layoutManager = layoutManager
+            it.adapter = adapter
         }
         //
 
         viewModel.getToMonthShift()
 
-        return root
+        viewModel.isLog.observe(viewLifecycleOwner,{
+            Log.d("Log",it.toString())
+            if(it == 0){
+                adapter.notifyDataSetChanged()
+                Log.d("リスト更新","")
+            }
+        })
+
+        return binding.root
     }
 
     override fun onDestroyView() {

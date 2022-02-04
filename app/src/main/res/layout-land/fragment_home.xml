@@ -10,9 +10,7 @@
         android:id="@+id/desireShiftHandOverTransitionBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
         android:layout_marginTop="32dp"
-        android:layout_marginEnd="24dp"
         android:text="シフト希望提出"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -28,29 +26,4 @@
         app:layout_constraintStart_toStartOf="@+id/desireShiftHandOverTransitionBtn"
         app:layout_constraintTop_toBottomOf="@+id/desireShiftHandOverTransitionBtn" />
 
-    <Button
-        android:id="@+id/notiEnd"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="54dp"
-        android:layout_marginBottom="32dp"
-        android:text="通知終わり"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/notiStart"
-        app:layout_constraintTop_toTopOf="@+id/notiStart"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <Button
-        android:id="@+id/notiStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="32dp"
-        android:text="通知開始"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/notiEnd"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmationAlreadyShiftHandOverTransitionBtn" />
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -77,8 +77,9 @@ class LoginViewModel(
             if (token != null){
                 validLogin = true
                 repository.set(token)
-                callback.moveTopPage()
+                repository.setUserId(empId.value!!)
                 Log.d("AccessToken", token)
+                callback.moveTopPage()
             }else{
                 validLogin = false
                 Log.d("AccessToken", "null")

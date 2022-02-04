@@ -3,11 +3,13 @@ package com.example.screendesign.fragment
 import android.content.Context
 import android.content.Intent
 import android.os.Bundle
+import android.text.BoringLayout.make
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -98,29 +100,27 @@ class DesireShiftHandOverVerificationFragment : Fragment() {
 
         Log.d("shiftList",viewModel.shiftList.toString())
 
-        if (viewModel.shiftList.isEmpty()){
-            binding.verificationBtn2.isEnabled = false
-        }else{
-            binding.verificationBtn2.setOnClickListener {
-                viewModel.ShiftHandOver()
-            }
+
+        binding.verificationBtn2.setOnClickListener {
+            viewModel.ShiftHandOver()
         }
+
 
         viewModel.isLog.observe(viewLifecycleOwner,{
             runSnackBar(it)
+            binding.verificationBtn2.isEnabled = it!=98
+            Log.d("isLog",it.toString())
             if(it == 1){
                 val intent = Intent(requireContext(), TopPageActivity::class.java)
                 startActivity(intent)
             }
-
         })
-
         return binding.root
     }
     private fun runSnackBar(log:Int){
         when(log){
-            1 -> Snackbar.make(binding.root, "シフトを提出しました。", Snackbar.LENGTH_SHORT).show()
-            2 -> Snackbar.make(binding.root, "シフトが提出できませんでした。", Snackbar.LENGTH_SHORT).show()
+            1 -> Toast.makeText(requireContext(), "シフトを提出しました。", Toast.LENGTH_SHORT).show()
+            2 -> Toast.makeText(requireContext(), "シフトが提出できませんでした。", Toast.LENGTH_SHORT).show()
             else -> return
         }
     }

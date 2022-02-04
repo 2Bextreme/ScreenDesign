@@ -10,52 +10,35 @@
         android:id="@+id/desireShiftHandOverTransitionBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="64dp"
-        android:layout_marginEnd="24dp"
+        android:backgroundTint="?attr/colorPrimary"
         android:text="シフト希望提出"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/confirmationAlreadyShiftHandOverTransitionBtn"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:shapeAppearance="?attr/borderRound" />
 
     <Button
         android:id="@+id/confirmationAlreadyShiftHandOverTransitionBtn"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="64dp"
-        android:text="提出済みシフト確認ボタン"
+        android:backgroundTint="?attr/colorPrimary"
+        android:text="提出済みシフト確認"
+        android:textColor="?attr/colorOnPrimary"
+        app:layout_constraintBottom_toTopOf="@+id/guideline2"
         app:layout_constraintEnd_toEndOf="@+id/desireShiftHandOverTransitionBtn"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="@+id/desireShiftHandOverTransitionBtn"
-        app:layout_constraintTop_toBottomOf="@+id/desireShiftHandOverTransitionBtn" />
+        app:layout_constraintTop_toBottomOf="@+id/desireShiftHandOverTransitionBtn"
+        app:shapeAppearance="?attr/borderRound" />
 
-    <Button
-        android:id="@+id/notiEnd"
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/guideline2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="通知終わり"
-        app:layout_constraintEnd_toStartOf="@+id/notiCheck"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/notiStart"
-        app:layout_constraintTop_toTopOf="@+id/notiStart" />
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="350dp" />
 
-    <Button
-        android:id="@+id/notiStart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="128dp"
-        android:text="通知開始"
-        app:layout_constraintEnd_toStartOf="@+id/notiEnd"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/confirmationAlreadyShiftHandOverTransitionBtn" />
-
-    <Button
-        android:id="@+id/notiCheck"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="通知チェック"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/notiEnd"
-        app:layout_constraintTop_toTopOf="@+id/notiEnd" />
 </androidx.constraintlayout.widget.ConstraintLayout>
