@@ -116,6 +116,11 @@ class DesireShiftHandOverFragment : Fragment() {
         }
         //
 
+        binding.initBtn.setOnClickListener {
+            viewModel.shiftDate.clear()
+            adapter.notifyDataSetChanged()
+        }
+
         binding.verificationBtn.setOnClickListener {
             val completeShiftList = ArrayList<ShiftDate>()
             for(list in viewModel.shiftDate){

@@ -27,7 +27,7 @@ class Repository (
         .add(KotlinJsonAdapterFactory())
         .build()
     private val retrofit = Retrofit.Builder()
-        .baseUrl("http://10.16.54.42")
+        .baseUrl("http://www.rin-ats.com")
         .addConverterFactory(MoshiConverterFactory.create(moshi).asLenient())
         .build()
     private val api = retrofit.create(Api::class.java)

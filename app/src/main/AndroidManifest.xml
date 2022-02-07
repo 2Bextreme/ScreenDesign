@@ -53,5 +53,4 @@
             android:name=".activity.SalaryConfirmationScreenActivity"
             android:exported="false" />
     </application>
-
 </manifest>
